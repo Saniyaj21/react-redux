@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import React from "react";
 
-const HomePage = () => {
+const HomePage = ({cartItems, setCartItems}) => {
 
     const [product, setProduct] = useState([])
-    const [cartItems, setCartItems] = useState([]);
+    
 
     const getProducts = async () => {
         let products = await axios.get('https://dummyjson.com/products');
@@ -15,8 +16,9 @@ const HomePage = () => {
 
 
     console.log(cartItems);
-    const addProductToCart = (productId) => {
-        setCartItems([...cartItems, productId])
+    const addProductToCart = (product) => {
+        setCartItems([...cartItems, product])
+        alert("Product added to cart")
     }
 
     useEffect(() => {
@@ -26,7 +28,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1 className="text-center text-2xl text-blue-400 my-4 font-bold">Get the latest products here.</h1>
+            <h1 className="text-center  text-2xl text-blue-400 my-4 font-bold">Get the latest products here.</h1>
             <div className="flex flex-wrap items-center justify-center">
                 {
                     product && product.map(p => <ProductCard 
