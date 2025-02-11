@@ -2,27 +2,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import React from "react";
-
-const HomePage = ({cartItems, setCartItems}) => {
-
-    const [product, setProduct] = useState([])
-    
-
-    const getProducts = async () => {
-        let products = await axios.get('https://dummyjson.com/products');
-        setProduct(products.data.products)
-        console.log(products);
-    }
+import { useDispatch } from "react-redux";
+import { getProducts } from "../redux/slices/productSlice";
+import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast';
 
 
-    console.log(cartItems);
-    const addProductToCart = (product) => {
-        setCartItems([...cartItems, product])
-        alert("Product added to cart")
-    }
+const HomePage = ({ cartItems, setCartItems }) => {
+    const products = useSelector(state => state.productReducer.products)
+    const dispatch = useDispatch()
+
+  
+
 
     useEffect(() => {
-        getProducts()
+        dispatch(getProducts())
+        // toast.success('Products fetched successfully!');
     }, [])
 
 
@@ -31,10 +26,10 @@ const HomePage = ({cartItems, setCartItems}) => {
             <h1 className="text-center  text-2xl text-blue-400 my-4 font-bold">Get the latest products here.</h1>
             <div className="flex flex-wrap items-center justify-center">
                 {
-                    product && product.map(p => <ProductCard 
+                    products && products.map(p => <ProductCard
                         key={p.id}
                         product={p}
-                        addProductToCart={addProductToCart} />
+                    />
                     )
                 }
             </div>

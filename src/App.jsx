@@ -5,6 +5,7 @@ import CartPage from "./pages/CartPage";
 import Header from "./components/Header";
 import { useState } from "react";
 import React from "react";
+import { Toaster } from 'react-hot-toast';
 const App = () => {
 
   const [cartItems, setCartItems] = useState([]);
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <Router>
       <Header />
+      <Toaster/>
       <Routes>
         <Route element={<HomePage cartItems={cartItems} setCartItems={setCartItems} />} path="/" />
         <Route element={<CartPage cartItems={cartItems} setCartItems={setCartItems}/>} path="/cart" />

@@ -1,32 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    cartItems: [
-        {
-            id: 1,
-            name: 'Product 1',
-            price: 10,
-            quantity: 1
-        }
-    ]
+  cartItems: [],
+  status:"idle"
 }
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state) => {
-      console.log("added to cart");
-      
+    addToCart: (state, action) => {
+      // console.log(action.payload);
+      state.cartItems.push(action.payload);
     },
-    removeFromCart: (state) => {
-      console.log("removed from cart");
-      
+    removeFromCart: (state, action) => {
+      state.cartItems = state.cartItems.filter(item => item.id!== action.payload);
+    //  console.log(action.payload);
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addToCart, removeFromCart} = cartSlice.actions
+export const { addToCart, removeFromCart } = cartSlice.actions
 
 export default cartSlice.reducer
